@@ -1,0 +1,47 @@
+---
+title: "Tarea 1"
+output: pdf_document
+author:
+- Eric Baldazua Miñana
+- Pablo López Landeros 
+- Gustavo Salazar Sosa
+- Adolfo Germán Marain Orozco
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Librerías
+```{r message=FALSE}
+library(readr)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(data.table)
+library(formattable)
+library(tidyr)
+library(DT)
+library(ggrepel)
+library(ggdark)
+library(gridExtra) 
+library(kableExtra)
+```
+
+
+## Pregunta 1   
+
+```{r}
+nsim <- 500
+moneda <- c("A","S")
+datos <- data.frame(matrix(NA, ncol = 4, nrow = nsim))
+colnames(datos) <- c("Resultado","r","n","2r-n")
+datos$Sim <- 1:nsim
+for (i in 1:nsim) {
+  sample(coin, size = 1)
+  
+}
+
+
+
+```
+
