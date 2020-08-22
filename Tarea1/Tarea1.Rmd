@@ -32,16 +32,93 @@ library(kableExtra)
 
 ```{r}
 nsim <- 500
-moneda <- c("A","S")
+# 1 van a ser los soles
+moneda <- c(0,1)
 datos <- data.frame(matrix(NA, ncol = 4, nrow = nsim))
-colnames(datos) <- c("Resultado","r","n","2r-n")
-datos$Sim <- 1:nsim
+colnames(datos) <- c("Resultado","r","n","prop")
+datos$n <- 1:nsim
+
 for (i in 1:nsim) {
-  sample(coin, size = 1)
   
+  datos$Resultado[i] <- sample(moneda, size = 1)
+  datos$r[i] <- sum(datos$Resultado[1:i])/i
+  datos$n[i] <- i
+  datos$prop[i] <- (2*datos$r[i])-i
+
 }
 
+ggplot(datos, aes(x = n, y = r)) +
+  geom_point(color = "red") +
+  geom_line(color = "blue") +
+  theme_bw() +
+  labs(
+  x = "Simulación",
+  y = "Proporcion de soles",
+  title = "Proporcion de soles vs Simulacion"
+  )
+
+ggplot(datos, aes(x = n, y = prop)) +
+  geom_point(color = "red") +
+  geom_line(color = "blue")+
+  theme_bw() +
+  labs(
+  x = "Simulación",
+  y = "2r-n",
+  title = "2r-n vs Simulacion"
+  )
 
 
 ```
+
+## Pregunta 2   
+Casos en los que podemos requerir utilizar simulación:   
+
+* Simulación de fenómenos naturales como por ejemplo ciertos tipos de reacciones químicas en la industria alimenticia.
+* Simulación de partidos o incluso temporadas completas de algún deporte (NFL, NBA, Fútbol). Un ejemplo dentor del futbol americano podría ser la simulación de una temporada con un modelo de efectos aleatorios sobre la posición de QB para determinar su valor y efectividad en un equipo. 
+* Dentro del mundo de las finanzas, los métodos Monte Carlo se utilizan para simular las fuentes de incertidumbre que afectan los valores de instrumentos, portafolios e inversiones. 
+* Dentro de la rama de Logística y Cadenas de Distribución, la simulación puede requerirse para simular la oferta y demanda de un producto. Además se utiliza mucho para evaluar la efectividad de los modelos de cadena de suminsitro que se proponen antes de que se implementen en el mercado.
+* En la industria de los videojuegos, un ejemplo de simulación lo podemos ver en las caminatas de los enemigos. El enemigo debe caminar de manera "aleatoria" en una superficie, para lo cual es neecesario simular un camino a tomar.    
+
+## Pregunta 3   
+
+
+## Pregunta 4
+Haremos el ejercicio suponiendo 10 pacientes. 
+
+Lo que haremos será utilizar R para simular:
+* Los tiempos de arribo de los pacientes
+* Si el paciente falla a su cita
+* 
+
+```{r}
+Num.Paciente <- rep(1:10)
+
+falla <- c("Si","No")
+fallo <- sample(falla, prob = c(0.1, 0.9), size = 10, replace = TRUE)
+
+
+horarios <- c(-2,-1,0,1,2)
+tiempo.llegadas <- rep(0,10)
+for (i in 1:10) {
+  tiempo.llegadas[i] <- sample(horarios, prob = c(0.1,0.2,0.4,0.2,0.1), size = 1, replace = TRUE)
+}
+
+tiempos.consultas <- rep(2:9)
+consultas <- rep(0,10)
+for (i in 1:10) {
+  consultas[i] <- sample(tiempos.consultas,
+                         prob = c(0.1,0.1,0.1,0.2,0.2,0.1,0.1,0.1),
+                         size = 1,
+                         replace = TRUE)
+}
+
+
+tabla <- data.frame(Num.Paciente,fallo,tiempo.llegadas,consultas)
+
+colnames(tabla) <- c("Paciente","Falló","Tiempo de llegada","Tiempo de consulta")
+tabla
+
+
+```
+
 
